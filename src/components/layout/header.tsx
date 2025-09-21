@@ -193,12 +193,12 @@ export function Header({ className, showNavigation = true, showUserActions = tru
               {/* Desktop: Show individual buttons */}
               <div className="hidden md:flex items-center space-x-2">
                 <Link href="/auth">
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" className="bg-background/20 border-border/30 text-foreground hover:bg-background/40 hover:text-foreground">
                     Sign In
                   </Button>
                 </Link>
                 <Link href="/auth">
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" className="bg-background/20 border-border/30 text-foreground hover:bg-background/40 hover:text-foreground">
                     Registration
                   </Button>
                 </Link>

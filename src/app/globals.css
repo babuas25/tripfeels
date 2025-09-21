@@ -72,3 +72,19 @@ body {
 .dark body {
   background: linear-gradient(135deg, #1e3a8a 0%, #312e81 50%, #1e1b4b 100%);
 }
+
+/* Select dropdown styling for dark mode */
+select {
+  color: hsl(var(--foreground));
+  background-color: hsl(var(--background));
+}
+
+select option {
+  color: hsl(var(--foreground));
+  background-color: hsl(var(--background));
+}
+
+/* Checkbox styling for dark mode */
+input[type="checkbox"] {
+  accent-color: hsl(var(--primary));
+}

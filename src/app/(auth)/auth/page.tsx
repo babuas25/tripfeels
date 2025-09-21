@@ -48,7 +48,7 @@ export default function AuthPage() {
       email: '',
       password: '',
       confirmPassword: '',
-      gender: 'Other',
+      gender: 'Male',
       dateOfBirth: '',
       mobile: '',
       acceptTerms: false
@@ -173,24 +173,24 @@ export default function AuthPage() {
       <Header showNavigation={false} showUserActions={true} />
       
       {/* Main content with sidebar for logged-in users */}
-      <div className="flex pt-14">
+      <div className="flex pt-14 min-h-[calc(100vh-3.5rem)]">
         {/* Sidebar for logged-in users */}
         {session?.user && (
-          <div className="h-[calc(100vh-3.5rem)] flex">
+          <div className="flex">
             <Sidebar />
           </div>
         )}
         
         {/* Main content area */}
-        <div className={`${session?.user ? 'flex-1' : 'w-full'} min-h-screen flex`}>
+        <div className={`${session?.user ? 'flex-1' : 'w-full'} flex`}>
           {/* Left Section - Testimonial (only for non-logged-in users) */}
           {!session?.user && (
-            <div className="hidden lg:flex lg:w-1/2 bg-gray-50 flex-col justify-end p-8">
+            <div className="hidden lg:flex lg:w-1/2 flex-col justify-end p-8">
               <div className="max-w-md">
-                <blockquote className="text-lg text-gray-900">
+                <blockquote className="text-lg text-white">
                   &ldquo;This library has saved me countless hours of work and helped me deliver stunning designs to my clients faster than ever before.&rdquo;
                 </blockquote>
-                <footer className="mt-4 text-sm text-gray-600">
+                <footer className="mt-4 text-sm text-gray-300">
                   - Sofia Davis
                 </footer>
               </div>
@@ -198,14 +198,14 @@ export default function AuthPage() {
           )}
 
           {/* Right Section - Auth Form */}
-          <div className={`${session?.user ? 'w-full' : 'w-full lg:w-1/2'} flex items-center justify-center p-8`}>
-          <div className="w-full max-w-md space-y-6">
+          <div className={`${session?.user ? 'w-full' : 'w-full lg:w-1/2'} flex justify-center p-8 bg-background min-h-[calc(100vh-3.5rem)]`}>
+          <div className="w-full max-w-md space-y-6 flex flex-col justify-center">
             {/* Header */}
             <div className="text-center">
-              <h1 className="text-2xl font-bold text-gray-900">
+              <h1 className="text-2xl font-bold text-foreground">
                 {activeTab === 'signin' ? 'Sign in to your account' : 'Create an account'}
               </h1>
-              <p className="mt-2 text-sm text-gray-600">
+              <p className="mt-2 text-sm text-muted-foreground">
                 {activeTab === 'signin' 
                   ? 'Enter your email below to sign in to your account'
                   : 'Enter your email below to create your account'
@@ -215,16 +215,16 @@ export default function AuthPage() {
 
             {/* Error Display */}
             {error && (
-              <div className="p-3 bg-red-50 border border-red-200 rounded-md">
-                <p className="text-sm text-red-600">{error}</p>
+              <div className="p-3 bg-red-50 border border-red-200 rounded-md dark:bg-red-500/20 dark:border-red-500/30">
+                <p className="text-sm text-red-600 dark:text-red-200">{error}</p>
               </div>
             )}
 
             {/* Tabs */}
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="signin">Sign In</TabsTrigger>
-                <TabsTrigger value="register">Register</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-2 bg-muted">
+                <TabsTrigger value="signin" className="data-[state=active]:bg-background data-[state=active]:text-foreground text-muted-foreground">Sign In</TabsTrigger>
+                <TabsTrigger value="register" className="data-[state=active]:bg-background data-[state=active]:text-foreground text-muted-foreground">Register</TabsTrigger>
               </TabsList>
 
               {/* Sign In Tab */}
@@ -240,7 +240,7 @@ export default function AuthPage() {
                             <Input 
                               type="email" 
                               placeholder="name@example.com" 
-                              className="h-10"
+                              className="h-10 bg-background border border-input text-foreground hover:bg-accent hover:text-accent-foreground"
                               {...field} 
                             />
                           </FormControl>
@@ -258,7 +258,7 @@ export default function AuthPage() {
                             <Input 
                               type="password" 
                               placeholder="Password"
-                              className="h-10"
+                              className="h-10 bg-background border border-input text-foreground hover:bg-accent hover:text-accent-foreground"
                               {...field} 
                             />
                           </FormControl>
@@ -275,10 +275,10 @@ export default function AuthPage() {
 
                 <div className="relative">
                   <div className="absolute inset-0 flex items-center">
-                    <span className="w-full border-t" />
+                    <span className="w-full border-t border-gray-300" />
                   </div>
                   <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-white px-2 text-gray-500">Or continue with</span>
+                    <span className="bg-background px-3 text-gray-500">Or continue with</span>
                   </div>
                 </div>
 
@@ -287,7 +287,7 @@ export default function AuthPage() {
                     variant="outline" 
                     onClick={() => handleSocialSignIn('google')} 
                     disabled={isLoading}
-                    className="h-10"
+                    className="h-10 bg-background border border-input text-foreground hover:bg-accent hover:text-accent-foreground"
                   >
                     <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
                       <path
@@ -313,7 +313,7 @@ export default function AuthPage() {
                     variant="outline" 
                     onClick={() => handleSocialSignIn('facebook')} 
                     disabled={isLoading}
-                    className="h-10"
+                    className="h-10 bg-background border border-input text-foreground hover:bg-accent hover:text-accent-foreground"
                   >
                     <svg className="mr-2 h-4 w-4" fill="#1877F2" viewBox="0 0 24 24">
                       <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
@@ -334,7 +334,11 @@ export default function AuthPage() {
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
-                              <Input placeholder="First name" className="h-10" {...field} />
+                              <Input 
+                                placeholder="First name" 
+                                className="h-10 bg-background border border-input text-foreground hover:bg-accent hover:text-accent-foreground" 
+                                {...field} 
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -347,7 +351,11 @@ export default function AuthPage() {
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
-                              <Input placeholder="Last name" className="h-10" {...field} />
+                              <Input 
+                                placeholder="Last name" 
+                                className="h-10 bg-background border border-input text-foreground hover:bg-accent hover:text-accent-foreground" 
+                                {...field} 
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -361,7 +369,12 @@ export default function AuthPage() {
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>
-                            <Input type="email" placeholder="name@example.com" className="h-10" {...field} />
+                            <Input 
+                              type="email" 
+                              placeholder="name@example.com" 
+                              className="h-10 bg-background border border-input text-foreground hover:bg-accent hover:text-accent-foreground" 
+                              {...field} 
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -374,7 +387,12 @@ export default function AuthPage() {
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>
-                            <Input type="password" placeholder="Password" className="h-10" {...field} />
+                            <Input 
+                              type="password" 
+                              placeholder="Password" 
+                              className="h-10 bg-background border border-input text-foreground hover:bg-accent hover:text-accent-foreground" 
+                              {...field} 
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -387,7 +405,12 @@ export default function AuthPage() {
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>
-                            <Input type="password" placeholder="Confirm Password" className="h-10" {...field} />
+                            <Input 
+                              type="password" 
+                              placeholder="Confirm Password" 
+                              className="h-10 bg-background border border-input text-foreground hover:bg-accent hover:text-accent-foreground" 
+                              {...field} 
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -401,8 +424,10 @@ export default function AuthPage() {
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
-                              <select className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" {...field}>
-                                <option value="Other">Other</option>
+                              <select 
+                                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" 
+                                {...field}
+                              >
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                               </select>
@@ -418,7 +443,11 @@ export default function AuthPage() {
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
-                              <Input type="date" className="h-10" {...field} />
+                              <Input 
+                                type="date" 
+                                className="h-10 bg-background border border-input text-foreground hover:bg-accent hover:text-accent-foreground" 
+                                {...field} 
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -432,7 +461,12 @@ export default function AuthPage() {
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>
-                            <Input type="tel" placeholder="Mobile Number" className="h-10" {...field} />
+                            <Input 
+                              type="tel" 
+                              placeholder="Mobile Number" 
+                              className="h-10 bg-background border border-input text-foreground hover:bg-accent hover:text-accent-foreground" 
+                              {...field} 
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -449,11 +483,11 @@ export default function AuthPage() {
                               type="checkbox"
                               checked={field.value}
                               onChange={field.onChange}
-                              className="mt-1"
+                              className="mt-1 h-4 w-4 rounded border border-input bg-background text-primary focus:ring-2 focus:ring-ring focus:ring-offset-2"
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
-                            <FormLabel className="text-sm">
+                            <FormLabel className="text-sm text-foreground">
                               I accept the terms and conditions
                             </FormLabel>
                             <FormMessage />
@@ -470,10 +504,10 @@ export default function AuthPage() {
 
                 <div className="relative">
                   <div className="absolute inset-0 flex items-center">
-                    <span className="w-full border-t" />
+                    <span className="w-full border-t border-gray-300" />
                   </div>
                   <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-white px-2 text-gray-500">Or continue with</span>
+                    <span className="bg-background px-3 text-gray-500">Or continue with</span>
                   </div>
                 </div>
 
@@ -482,7 +516,7 @@ export default function AuthPage() {
                     variant="outline" 
                     onClick={() => handleSocialSignIn('google')} 
                     disabled={isLoading}
-                    className="h-10"
+                    className="h-10 bg-background border border-input text-foreground hover:bg-accent hover:text-accent-foreground"
                   >
                     <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
                       <path
@@ -508,7 +542,7 @@ export default function AuthPage() {
                     variant="outline" 
                     onClick={() => handleSocialSignIn('facebook')} 
                     disabled={isLoading}
-                    className="h-10"
+                    className="h-10 bg-background border border-input text-foreground hover:bg-accent hover:text-accent-foreground"
                   >
                     <svg className="mr-2 h-4 w-4" fill="#1877F2" viewBox="0 0 24 24">
                       <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
@@ -520,13 +554,13 @@ export default function AuthPage() {
             </Tabs>
 
             {/* Footer */}
-            <p className="text-center text-xs text-gray-500">
+            <p className="text-center text-xs text-muted-foreground">
               By clicking continue, you agree to our{' '}
-              <span className="underline underline-offset-4 cursor-pointer hover:text-gray-900">
+              <span className="underline underline-offset-4 cursor-pointer hover:text-foreground">
                 Terms of Service
               </span>{' '}
               and{' '}
-              <span className="underline underline-offset-4 cursor-pointer hover:text-gray-900">
+              <span className="underline underline-offset-4 cursor-pointer hover:text-foreground">
                 Privacy Policy
               </span>
               .
