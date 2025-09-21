@@ -59,7 +59,7 @@ interface HeaderProps {
 }
 
 export function Header({ className, showNavigation = true, showUserActions = true }: HeaderProps) {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
   const pathname = usePathname()
   const { theme, setTheme } = useTheme()
   const { logoType, textLogo, logoImage } = useThemeContext()
@@ -93,7 +93,7 @@ export function Header({ className, showNavigation = true, showUserActions = tru
 
   return (
     <header className={cn(
-      "fixed top-0 left-0 right-0 z-40 h-14 bg-background border-b border-border shadow-sm",
+      "fixed top-0 left-0 right-0 z-40 h-14 backdrop-blur-md bg-background/80 border-b border-border shadow-sm",
       className
     )}>
       <div className="flex items-center justify-between px-4 h-full max-w-7xl mx-auto">
@@ -105,7 +105,7 @@ export function Header({ className, showNavigation = true, showUserActions = tru
             size="icon"
             className="md:hidden h-8 w-8 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100/60 dark:hover:bg-gray-800/60 backdrop-blur-sm"
           >
-            <Menu className="h-4 w-4" />
+            <Menu className="h-4 w-4 text-foreground" />
           </Button>
           
           {/* Logo Section */}
@@ -130,7 +130,7 @@ export function Header({ className, showNavigation = true, showUserActions = tru
             <GlassButton
               variant="glass"
               size="sm"
-              className="h-8 px-2"
+              className="h-8 px-2 hover:bg-background/90 border-border/30"
               onClick={() => {
                 if (theme === 'light') setTheme('dark')
                 else if (theme === 'dark') setTheme('system')
@@ -138,26 +138,28 @@ export function Header({ className, showNavigation = true, showUserActions = tru
               }}
             >
               {theme === 'light' ? (
-                <Sun className="h-4 w-4" />
+                <Sun className="h-4 w-4 text-foreground" />
               ) : theme === 'dark' ? (
-                <Moon className="h-4 w-4" />
+                <Moon className="h-4 w-4 text-foreground" />
               ) : (
-                <Monitor className="h-4 w-4" />
+                <Monitor className="h-4 w-4 text-foreground" />
               )}
             </GlassButton>
           </div>
           {/* User Actions */}
-          {showUserActions && session?.user ? (
+          {showUserActions && status === 'loading' ? (
+            <div className="h-8 w-8 bg-background/20 rounded-full animate-pulse"></div>
+          ) : showUserActions && session?.user ? (
             <div className="relative" ref={userDropdownRef}>
               {/* User Icon Button */}
               <GlassButton
                 variant="glass"
                 size="sm"
-                className="h-8 w-8 p-0"
+                className="h-8 w-8 p-0 hover:bg-background/90 border-border/30"
                 onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
               >
-                <div className="w-6 h-6 bg-muted backdrop-blur-sm rounded-full flex items-center justify-center">
-                  <span className={cn("text-xs font-medium", colors.text.secondary)}>
+                <div className="w-6 h-6 bg-primary/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-primary/30">
+                  <span className="text-xs font-medium text-primary">
                     {session.user.name?.split(' ').map(n => n[0]).join('').toUpperCase() || 'U'}
                   </span>
                 </div>
@@ -178,7 +180,7 @@ export function Header({ className, showNavigation = true, showUserActions = tru
                       }}
                       className={cn("w-full text-left px-4 py-2 text-sm flex items-center gap-2", colors.text.secondary, colors.interactive.hover)}
                     >
-                      <LogOut className="h-4 w-4" />
+                      <LogOut className="h-4 w-4 text-foreground" />
                       Sign Out
                     </button>
                   </div>
@@ -207,11 +209,11 @@ export function Header({ className, showNavigation = true, showUserActions = tru
                 <GlassButton
                   variant="glass"
                   size="sm"
-                  className="flex items-center gap-1"
+                  className="flex items-center gap-1 hover:bg-background/90 border-border/30"
                   onClick={() => setIsMobileDropdownOpen(!isMobileDropdownOpen)}
                 >
-                  <UserCircle className="h-4 w-4" />
-                  <ChevronDown className="h-3 w-3" />
+                  <UserCircle className="h-4 w-4 text-foreground" />
+                  <ChevronDown className="h-3 w-3 text-foreground" />
                 </GlassButton>
                 
                 {/* Dropdown Menu */}

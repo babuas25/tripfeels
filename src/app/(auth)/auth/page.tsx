@@ -169,7 +169,7 @@ export default function AuthPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen">
       <Header showNavigation={false} showUserActions={true} />
       
       {/* Main content with sidebar for logged-in users */}

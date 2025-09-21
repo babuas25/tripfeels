@@ -15,7 +15,7 @@ const glassButtonVariants = cva(
         secondary: variants.button.secondary,
         ghost: variants.button.ghost,
         link: "text-primary underline-offset-4 hover:underline",
-        glass: "backdrop-blur-sm bg-white/60 dark:bg-gray-800/60 border border-white/20 dark:border-gray-700/20 hover:bg-white/80 dark:hover:bg-gray-700/80 text-foreground",
+        glass: "backdrop-blur-sm bg-background/60 border border-border/20 hover:bg-background/80 text-foreground",
       },
       size: {
         default: "h-10 px-4 py-2",

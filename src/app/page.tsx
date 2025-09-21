@@ -5,7 +5,7 @@ import { AuthSessionProvider } from '@/components/providers/session-provider'
 export default function HomePage() {
   return (
     <AuthSessionProvider>
-      <div className="min-h-screen bg-white dark:bg-gray-900">
+      <div className="min-h-screen">
         <Header showNavigation={false} showUserActions={true} />
         
         {/* Main content with sidebar for logged-in users */}

@@ -18,18 +18,18 @@ const config: Config = {
     },
     extend: {
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        logo: ['Nordique Pro', 'var(--font-poppins)', 'Inter', 'Arial', 'sans-serif'],
+        sans: ['var(--font-geist-sans)', 'sans-serif'],
+        logo: ['Nordique Pro', 'var(--font-poppins)', 'Arial', 'sans-serif'],
       },
       colors: {
-        border: "#e2e8f0",
-        input: "#e2e8f0",
-        ring: "#0f172a",
-        background: "#ffffff",
-        foreground: "#0f172a",
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#0f172a",
-          foreground: "#ffffff",
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
           50: '#EFF6FF',
           100: '#DBEAFE',
           200: '#BFDBFE',
@@ -43,8 +43,8 @@ const config: Config = {
           950: '#172554'
         },
         secondary: {
-          DEFAULT: "#f1f5f9",
-          foreground: "#0f172a",
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
           50: '#ECFDF5',
           100: '#D1FAE5',
           200: '#A7F3D0',
@@ -57,24 +57,24 @@ const config: Config = {
           900: '#064E3B'
         },
         destructive: {
-          DEFAULT: "#ef4444",
-          foreground: "#ffffff",
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
         },
         muted: {
-          DEFAULT: "#f1f5f9",
-          foreground: "#64748b",
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
         },
         accent: {
-          DEFAULT: "#f1f5f9",
-          foreground: "#0f172a",
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
         },
         popover: {
-          DEFAULT: "#ffffff",
-          foreground: "#0f172a",
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
         },
         card: {
-          DEFAULT: "#ffffff",
-          foreground: "#0f172a",
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
         },
       },
       borderRadius: {

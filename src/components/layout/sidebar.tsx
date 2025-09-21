@@ -68,7 +68,7 @@ export function Sidebar({ className }: SidebarProps) {
 
   return (
     <div className={cn(
-      "flex flex-col backdrop-blur-md bg-white/80 dark:bg-gray-900/80 border-r border-white/20 dark:border-gray-800/20 shadow-md transition-all duration-300 h-full",
+      "flex flex-col backdrop-blur-md bg-background/80 border-r border-border shadow-md transition-all duration-300 h-full",
       isCollapsed ? "w-20" : "w-64",
       className
     )}>
@@ -87,14 +87,21 @@ export function Sidebar({ className }: SidebarProps) {
             )}
           </h2>
         )}
-        <div className="flex justify-center w-full">
+        <div className={cn(
+          "flex",
+          isCollapsed ? "justify-center w-full" : "justify-end"
+        )}>
           <GlassButton
             variant="glass"
             size="icon"
             onClick={() => setIsCollapsed(!isCollapsed)}
-            className="h-8 w-8 font-bold"
+            className="h-8 w-8 font-bold hover:bg-background/90 border-border/30"
           >
-            {isCollapsed ? <ChevronRight className="h-4 w-4 font-bold" /> : <ChevronLeft className="h-4 w-4 font-bold" />}
+            {isCollapsed ? (
+              <ChevronRight className="h-4 w-4 font-bold text-foreground" />
+            ) : (
+              <ChevronLeft className="h-4 w-4 font-bold text-foreground" />
+            )}
           </GlassButton>
         </div>
       </div>
@@ -103,7 +110,7 @@ export function Sidebar({ className }: SidebarProps) {
       <div className={cn("border-b", colors.border.muted)}></div>
 
       {/* Navigation */}
-      <nav className="flex-1 p-4 space-y-6">
+      <nav className="flex-1 p-4 space-y-2">
         {navigationItems.map((item) => {
           const Icon = iconMap[item.icon as keyof typeof iconMap]
           const isActive = pathname === item.href
@@ -113,10 +120,10 @@ export function Sidebar({ className }: SidebarProps) {
               key={item.href} 
               href={item.href}
               className={cn(
-                "flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 backdrop-blur-sm",
+                "flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium transition-all duration-200 backdrop-blur-sm",
                 isActive 
-                  ? cn("bg-muted/80", colors.text.primary)
-                  : cn(colors.text.secondary, colors.interactive.hover)
+                  ? "bg-background/60 text-foreground border border-border/30"
+                  : "text-muted-foreground hover:bg-background/40 hover:text-foreground"
               )}
             >
               <Icon className="h-5 w-5 flex-shrink-0" />
