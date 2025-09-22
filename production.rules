@@ -120,6 +120,14 @@ service cloud.firestore {
     match /themePreferences/{document} {
       allow read, write, create, delete: if isSuperAdmin();
     }
+
+    // Auth slideshow images - public read, SuperAdmin write
+    match /auth_slides/{document} {
+      // Anyone (even not logged in) can read to display slideshow on /auth
+      allow read: if true;
+      // Only SuperAdmin can create/update/delete slides
+      allow create, update, delete: if isSuperAdmin();
+    }
     
     // Notifications
     match /notifications/{document} {

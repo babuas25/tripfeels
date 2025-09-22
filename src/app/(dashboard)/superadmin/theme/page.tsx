@@ -6,8 +6,10 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Upload, Type, Image, Save, Eye } from 'lucide-react'
+import { Upload, Type, Image, Save, Eye, Plus, Trash2 } from 'lucide-react'
+import { addSlide, deleteSlide, listSlides } from '@/lib/firebase/slides'
 import { useTheme } from '@/contexts/theme-context'
+import SlideshowManager from './SlideshowManager'
 
 export default function SuperAdminThemePage() {
   const { logoType, textLogo, logoImage, colorTheme, setLogoType, setTextLogo, setLogoImage, setColorTheme, saveThemeSettings } = useTheme()
@@ -53,9 +55,10 @@ export default function SuperAdminThemePage() {
       </div>
 
       <Tabs defaultValue="logo" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="logo">Logo Settings</TabsTrigger>
           <TabsTrigger value="colors">Color Scheme</TabsTrigger>
+          <TabsTrigger value="slideshow">Slideshow</TabsTrigger>
           <TabsTrigger value="preview">Preview</TabsTrigger>
         </TabsList>
 
@@ -432,6 +435,18 @@ export default function SuperAdminThemePage() {
                   Preview Changes
                 </Button>
               </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="slideshow" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Auth Slideshow</CardTitle>
+              <CardDescription>Manage images for the left-side slideshow on the auth page</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <SlideshowManager />
             </CardContent>
           </Card>
         </TabsContent>

@@ -21,6 +21,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Header } from '@/components/layout/header'
 import { Sidebar } from '@/components/layout/sidebar'
 import { useSession } from 'next-auth/react'
+import AuthSlideshow from '@/components/auth/AuthSlideshow'
 
 export default function AuthPage() {
   const [isLoading, setIsLoading] = useState(false)
@@ -183,19 +184,8 @@ export default function AuthPage() {
         
         {/* Main content area */}
         <div className={`${session?.user ? 'flex-1' : 'w-full'} flex`}>
-          {/* Left Section - Testimonial (only for non-logged-in users) */}
-          {!session?.user && (
-            <div className="hidden lg:flex lg:w-1/2 flex-col justify-end p-8">
-              <div className="max-w-md">
-                <blockquote className="text-lg text-white">
-                  &ldquo;This library has saved me countless hours of work and helped me deliver stunning designs to my clients faster than ever before.&rdquo;
-                </blockquote>
-                <footer className="mt-4 text-sm text-gray-300">
-                  - Sofia Davis
-                </footer>
-              </div>
-            </div>
-          )}
+          {/* Left Section - Slideshow (only for non-logged-in users) */}
+          {!session?.user && <AuthSlideshow />}
 
           {/* Right Section - Auth Form */}
           <div className={`${session?.user ? 'w-full' : 'w-full lg:w-1/2'} flex justify-center p-8 bg-background min-h-[calc(100vh-3.5rem)]`}>
