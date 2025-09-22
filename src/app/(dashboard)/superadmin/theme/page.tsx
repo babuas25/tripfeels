@@ -48,18 +48,18 @@ export default function SuperAdminThemePage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Theme Management</h1>
-        <p className="text-gray-600 dark:text-gray-400 mt-2">
+        <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">Theme Management</h1>
+        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
           Customize your application&apos;s appearance, logo, and branding.
         </p>
       </div>
 
       <Tabs defaultValue="logo" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="logo">Logo Settings</TabsTrigger>
-          <TabsTrigger value="colors">Color Scheme</TabsTrigger>
-          <TabsTrigger value="slideshow">Slideshow</TabsTrigger>
-          <TabsTrigger value="preview">Preview</TabsTrigger>
+        <TabsList className="!flex !w-full !flex-wrap !gap-1 !h-auto !p-2">
+          <TabsTrigger value="logo" className="!text-xs md:!text-sm !flex-1 !min-w-[calc(50%-0.125rem)] md:!min-w-0 !px-2 !py-2">Logo Settings</TabsTrigger>
+          <TabsTrigger value="colors" className="!text-xs md:!text-sm !flex-1 !min-w-[calc(50%-0.125rem)] md:!min-w-0 !px-2 !py-2">Color Scheme</TabsTrigger>
+          <TabsTrigger value="slideshow" className="!text-xs md:!text-sm !flex-1 !min-w-[calc(50%-0.125rem)] md:!min-w-0 !px-2 !py-2">Slideshow</TabsTrigger>
+          <TabsTrigger value="preview" className="!text-xs md:!text-sm !flex-1 !min-w-[calc(50%-0.125rem)] md:!min-w-0 !px-2 !py-2">Preview</TabsTrigger>
         </TabsList>
 
         <TabsContent value="logo" className="space-y-6">
@@ -425,12 +425,12 @@ export default function SuperAdminThemePage() {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex gap-3 pt-4">
-                <Button onClick={handleSave} className="flex items-center gap-2">
+              <div className="flex flex-wrap gap-3 pt-4">
+                <Button onClick={handleSave} className="flex items-center gap-2 flex-1 min-w-[calc(50%-0.375rem)] sm:flex-none sm:min-w-0">
                   <Save className="h-4 w-4" />
                   Apply Theme
                 </Button>
-                <Button variant="outline" onClick={handlePreview} className="flex items-center gap-2">
+                <Button variant="outline" onClick={handlePreview} className="flex items-center gap-2 flex-1 min-w-[calc(50%-0.375rem)] sm:flex-none sm:min-w-0">
                   <Eye className="h-4 w-4" />
                   Preview Changes
                 </Button>

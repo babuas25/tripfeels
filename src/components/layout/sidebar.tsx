@@ -53,13 +53,18 @@ const iconMap = {
 
 interface SidebarProps {
   className?: string
+  isMobile?: boolean
+  onClose?: () => void
 }
 
-export function Sidebar({ className }: SidebarProps) {
+export function Sidebar({ className, isMobile = false, onClose }: SidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(true)
   const { data: session } = useSession()
   const pathname = usePathname()
   const { logoType, textLogo, logoImage } = useTheme()
+
+  // On mobile, always show expanded sidebar with text
+  const shouldShowText = isMobile || !isCollapsed
 
   // Always show sidebar with fallback navigation
   const navigationItems = session?.user?.role 
@@ -69,12 +74,12 @@ export function Sidebar({ className }: SidebarProps) {
   return (
     <div className={cn(
       "flex flex-col backdrop-blur-md bg-background/80 border-r border-border shadow-md transition-all duration-300 h-full",
-      isCollapsed ? "w-20" : "w-64",
+      isMobile ? "w-64" : (isCollapsed ? "w-20" : "w-64"),
       className
     )}>
       {/* Header */}
       <div className="flex items-center justify-between p-4">
-        {!isCollapsed && (
+        {shouldShowText && (
           <h2 className={cn("text-xl font-bold font-logo", colors.text.primary)}>
             {logoType === 'image' && logoImage ? (
               <img 
@@ -89,20 +94,31 @@ export function Sidebar({ className }: SidebarProps) {
         )}
         <div className={cn(
           "flex",
-          isCollapsed ? "justify-center w-full" : "justify-end"
+          shouldShowText ? "justify-end" : "justify-center w-full"
         )}>
-          <GlassButton
-            variant="glass"
-            size="icon"
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            className="h-8 w-8 font-bold hover:bg-background/90 border-border/30"
-          >
-            {isCollapsed ? (
-              <ChevronRight className="h-4 w-4 font-bold text-foreground" />
-            ) : (
+          {isMobile ? (
+            <GlassButton
+              variant="glass"
+              size="icon"
+              onClick={onClose}
+              className="h-8 w-8 font-bold hover:bg-background/90 border-border/30"
+            >
               <ChevronLeft className="h-4 w-4 font-bold text-foreground" />
-            )}
-          </GlassButton>
+            </GlassButton>
+          ) : (
+            <GlassButton
+              variant="glass"
+              size="icon"
+              onClick={() => setIsCollapsed(!isCollapsed)}
+              className="h-8 w-8 font-bold hover:bg-background/90 border-border/30"
+            >
+              {isCollapsed ? (
+                <ChevronRight className="h-4 w-4 font-bold text-foreground" />
+              ) : (
+                <ChevronLeft className="h-4 w-4 font-bold text-foreground" />
+              )}
+            </GlassButton>
+          )}
         </div>
       </div>
       
@@ -119,6 +135,7 @@ export function Sidebar({ className }: SidebarProps) {
             <Link 
               key={item.href} 
               href={item.href}
+              onClick={isMobile ? onClose : undefined}
               className={cn(
                 "flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium transition-all duration-200 backdrop-blur-sm",
                 isActive 
@@ -127,7 +144,7 @@ export function Sidebar({ className }: SidebarProps) {
               )}
             >
               <Icon className="h-5 w-5 flex-shrink-0" />
-              {!isCollapsed && <span>{item.label}</span>}
+              {shouldShowText && <span>{item.label}</span>}
             </Link>
           )
         })}
@@ -138,7 +155,7 @@ export function Sidebar({ className }: SidebarProps) {
 
       {/* User Profile & Sign Out */}
       <div className="p-4">
-        {!isCollapsed && session?.user && (
+        {shouldShowText && session?.user && (
           <div className="mb-3">
             <p className={cn("text-sm font-medium", colors.text.primary)}>{session.user.name}</p>
             <p className={cn("text-xs", colors.text.secondary)}>{session.user.role}</p>
@@ -146,12 +163,15 @@ export function Sidebar({ className }: SidebarProps) {
         )}
         <GlassButton
           variant="glass"
-          size={isCollapsed ? "icon" : "sm"}
-          onClick={() => signOut({ callbackUrl: '/' })}
+          size={shouldShowText ? "sm" : "icon"}
+          onClick={() => {
+            if (isMobile && onClose) onClose()
+            signOut({ callbackUrl: '/' })
+          }}
           className="w-full justify-start px-3 py-2"
         >
           <LogOut className="h-5 w-5 flex-shrink-0" />
-          {!isCollapsed && <span className="ml-3">Sign Out</span>}
+          {shouldShowText && <span className="ml-3">Sign Out</span>}
         </GlassButton>
       </div>
     </div>

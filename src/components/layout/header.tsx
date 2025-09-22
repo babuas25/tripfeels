@@ -56,9 +56,10 @@ interface HeaderProps {
   className?: string
   showNavigation?: boolean
   showUserActions?: boolean
+  onMobileMenuToggle?: () => void
 }
 
-export function Header({ className, showNavigation = true, showUserActions = true }: HeaderProps) {
+export function Header({ className, showNavigation = true, showUserActions = true, onMobileMenuToggle }: HeaderProps) {
   const { data: session, status } = useSession()
   const pathname = usePathname()
   const { theme, setTheme } = useTheme()
@@ -104,6 +105,7 @@ export function Header({ className, showNavigation = true, showUserActions = tru
             variant="ghost"
             size="icon"
             className="md:hidden h-8 w-8 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100/60 dark:hover:bg-gray-800/60 backdrop-blur-sm"
+            onClick={onMobileMenuToggle}
           >
             <Menu className="h-4 w-4 text-foreground" />
           </Button>
