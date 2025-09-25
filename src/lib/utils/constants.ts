@@ -72,9 +72,11 @@ export const NAVIGATION_ITEMS = {
   [ROLES.SUPER_ADMIN]: [
     { label: 'Home', href: '/', icon: 'Home' },
     { label: 'Theme', href: '/superadmin/theme', icon: 'Palette' },
+    { label: 'User Management', href: '/superadmin/admin', icon: 'Users' },
   ],
   [ROLES.ADMIN]: [
     { label: 'Home', href: '/', icon: 'Home' },
+    { label: 'User Management', href: '/users/admin', icon: 'Users' },
   ],
   [ROLES.STAFF]: [
     { label: 'Home', href: '/', icon: 'Home' },

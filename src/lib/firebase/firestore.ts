@@ -19,6 +19,7 @@ export interface UserDocument {
   uid: string
   email: string
   role: RoleType
+  category?: string
   profile: {
     firstName: string
     lastName: string
@@ -101,10 +102,15 @@ export const getUsersByRole = async (role: RoleType) => {
 
 export const getAllUsers = async (limitCount = 50) => {
   const usersRef = collection(db, 'users')
-  const q = query(usersRef, orderBy('metadata.createdAt', 'desc'), limit(limitCount))
-  const querySnapshot = await getDocs(q)
-  
-  return querySnapshot.docs.map(doc => doc.data() as UserDocument)
+  try {
+    const q = query(usersRef, orderBy('metadata.createdAt', 'desc'), limit(limitCount))
+    const querySnapshot = await getDocs(q)
+    return querySnapshot.docs.map(doc => doc.data() as UserDocument)
+  } catch (err) {
+    // Fallback if orderBy on nested field is not indexed or missing in some docs
+    const fallbackSnapshot = await getDocs(query(usersRef, limit(limitCount)))
+    return fallbackSnapshot.docs.map(doc => doc.data() as UserDocument)
+  }
 }
 
 // Special admin emails
