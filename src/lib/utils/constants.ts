@@ -70,24 +70,24 @@ export const SUPER_ADMIN_EMAILS = [
 // Navigation menu items by role
 export const NAVIGATION_ITEMS = {
   [ROLES.SUPER_ADMIN]: [
-    { label: 'Home', href: '/', icon: 'Home' },
+    { label: 'Dashboard', href: '/superadmin/admin', icon: 'Home' },
+    { label: 'User Management', href: '/superadmin/admin/user-management', icon: 'Users' },
     { label: 'Theme', href: '/superadmin/theme', icon: 'Palette' },
-    { label: 'User Management', href: '/superadmin/admin', icon: 'Users' },
   ],
   [ROLES.ADMIN]: [
-    { label: 'Home', href: '/', icon: 'Home' },
-    { label: 'User Management', href: '/users/admin', icon: 'Users' },
+    { label: 'Dashboard', href: '/users/admin', icon: 'Home' },
+    { label: 'User Management', href: '/users/admin/user-management', icon: 'Users' },
   ],
   [ROLES.STAFF]: [
-    { label: 'Home', href: '/', icon: 'Home' },
+    { label: 'Dashboard', href: '/users/staff', icon: 'Home' },
   ],
   [ROLES.PARTNER]: [
-    { label: 'Home', href: '/', icon: 'Home' },
+    { label: 'Dashboard', href: '/users/partner', icon: 'Home' },
   ],
   [ROLES.AGENT]: [
-    { label: 'Home', href: '/', icon: 'Home' },
+    { label: 'Dashboard', href: '/users/agent', icon: 'Home' },
   ],
   [ROLES.USER]: [
-    { label: 'Home', href: '/', icon: 'Home' },
+    { label: 'Dashboard', href: '/users/publicuser', icon: 'Home' },
   ],
 } as const

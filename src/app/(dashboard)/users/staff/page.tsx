@@ -1,9 +1,7 @@
 'use client'
 
+import { DashboardHome } from '@/components/dashboard/dashboard-home'
+
 export default function StaffDashboard() {
-  return (
-    <div className="space-y-6">
-      {/* Your dashboard content goes here */}
-    </div>
-  )
+  return <DashboardHome userRole="Staff" />
 }

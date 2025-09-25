@@ -28,6 +28,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     loadThemeSettings()
   }, [])
 
+  // Auto-save theme settings when colorTheme changes
+  useEffect(() => {
+    if (colorTheme) {
+      saveThemeSettings()
+    }
+  }, [colorTheme, logoType, textLogo, logoImage])
+
   const loadThemeSettings = () => {
     try {
       const saved = localStorage.getItem('tripfeels-theme-settings')

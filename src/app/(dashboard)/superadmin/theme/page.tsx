@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
+import { DynamicButton } from '@/components/ui/dynamic-theme-components'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -47,9 +48,9 @@ export default function SuperAdminThemePage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">Theme Management</h1>
-        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+      <div className="p-6 bg-white/20 dark:bg-white/10 backdrop-blur-md rounded-xl border border-white/30 dark:border-white/20 shadow-lg">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Theme Management</h1>
+        <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
           Customize your application&apos;s appearance, logo, and branding.
         </p>
       </div>
@@ -63,17 +64,17 @@ export default function SuperAdminThemePage() {
         </TabsList>
 
         <TabsContent value="logo" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+          <div className="bg-white/20 dark:bg-white/10 backdrop-blur-md rounded-xl border border-white/30 dark:border-white/20 shadow-lg">
+            <div className="p-6 border-b border-white/20 dark:border-white/10">
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
                 <Type className="h-5 w-5" />
                 Logo Configuration
-              </CardTitle>
-              <CardDescription>
+              </h2>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                 Choose between text or image logo for header and sidebar
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
+              </p>
+            </div>
+            <div className="p-6 space-y-6">
               {/* Logo Type Selection */}
               <div className="space-y-4">
                 <Label className="text-base font-medium">Logo Type</Label>
@@ -196,28 +197,28 @@ export default function SuperAdminThemePage() {
 
               {/* Action Buttons */}
               <div className="flex gap-3 pt-4">
-                <Button onClick={handleSave} className="flex items-center gap-2">
+                <DynamicButton variant="primary" onClick={handleSave} className="flex items-center gap-2">
                   <Save className="h-4 w-4" />
                   Save Changes
-                </Button>
-                <Button variant="outline" onClick={handlePreview} className="flex items-center gap-2">
+                </DynamicButton>
+                <DynamicButton variant="outline" onClick={handlePreview} className="flex items-center gap-2">
                   <Eye className="h-4 w-4" />
                   Preview
-                </Button>
+                </DynamicButton>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </TabsContent>
 
         <TabsContent value="colors" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Color Scheme</CardTitle>
-              <CardDescription>
+          <div className="bg-white/20 dark:bg-white/10 backdrop-blur-md rounded-xl border border-white/30 dark:border-white/20 shadow-lg">
+            <div className="p-6 border-b border-white/20 dark:border-white/10">
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Color Scheme</h2>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                 Choose from predefined color themes that work in both light and dark modes
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
+              </p>
+            </div>
+            <div className="p-6 space-y-6">
               {/* Color Theme Selection */}
               <div className="space-y-4">
                 <Label className="text-base font-medium">Select Color Theme</Label>
@@ -426,45 +427,45 @@ export default function SuperAdminThemePage() {
 
               {/* Action Buttons */}
               <div className="flex flex-wrap gap-3 pt-4">
-                <Button onClick={handleSave} className="flex items-center gap-2 flex-1 min-w-[calc(50%-0.375rem)] sm:flex-none sm:min-w-0">
+                <DynamicButton variant="primary" onClick={handleSave} className="flex items-center gap-2 flex-1 min-w-[calc(50%-0.375rem)] sm:flex-none sm:min-w-0">
                   <Save className="h-4 w-4" />
                   Apply Theme
-                </Button>
-                <Button variant="outline" onClick={handlePreview} className="flex items-center gap-2 flex-1 min-w-[calc(50%-0.375rem)] sm:flex-none sm:min-w-0">
+                </DynamicButton>
+                <DynamicButton variant="outline" onClick={handlePreview} className="flex items-center gap-2 flex-1 min-w-[calc(50%-0.375rem)] sm:flex-none sm:min-w-0">
                   <Eye className="h-4 w-4" />
                   Preview Changes
-                </Button>
+                </DynamicButton>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </TabsContent>
 
         <TabsContent value="slideshow" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Auth Slideshow</CardTitle>
-              <CardDescription>Manage images for the left-side slideshow on the auth page</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
+          <div className="bg-white/20 dark:bg-white/10 backdrop-blur-md rounded-xl border border-white/30 dark:border-white/20 shadow-lg">
+            <div className="p-6 border-b border-white/20 dark:border-white/10">
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Auth Slideshow</h2>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Manage images for the left-side slideshow on the auth page</p>
+            </div>
+            <div className="p-6 space-y-6">
               <SlideshowManager />
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </TabsContent>
 
         <TabsContent value="preview" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Theme Preview</CardTitle>
-              <CardDescription>
+          <div className="bg-white/20 dark:bg-white/10 backdrop-blur-md rounded-xl border border-white/30 dark:border-white/20 shadow-lg">
+            <div className="p-6 border-b border-white/20 dark:border-white/10">
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Theme Preview</h2>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                 Preview your theme changes before applying
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
+              </p>
+            </div>
+            <div className="p-6">
               <p className="text-gray-600 dark:text-gray-400">
                 Theme preview will be implemented here.
               </p>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </TabsContent>
       </Tabs>
     </div>

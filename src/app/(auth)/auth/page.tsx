@@ -13,6 +13,7 @@ import { registrationSchema, signInSchema, type RegistrationFormData, type SignI
 import { DASHBOARD_ROUTES } from '@/lib/utils/constants'
 
 import { Button } from '@/components/ui/button'
+import { DynamicButton } from '@/components/ui/dynamic-theme-components'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -179,7 +180,14 @@ export default function AuthPage() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-indigo-900">
+      {/* Animated background elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-32 w-80 h-80 bg-blue-200/30 dark:bg-blue-400/20 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob"></div>
+        <div className="absolute -bottom-40 -left-32 w-80 h-80 bg-indigo-200/30 dark:bg-indigo-400/20 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob animation-delay-2000"></div>
+        <div className="absolute top-40 left-40 w-80 h-80 bg-slate-200/30 dark:bg-slate-400/20 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob animation-delay-4000"></div>
+      </div>
+      
       <Header 
         showNavigation={false} 
         showUserActions={true} 
@@ -187,7 +195,7 @@ export default function AuthPage() {
       />
       
       {/* Main content with sidebar for logged-in users */}
-      <div className="flex pt-14 min-h-[calc(100vh-3.5rem)]">
+      <div className="flex pt-14 min-h-[calc(100vh-3.5rem)] relative z-10">
         {/* Desktop Sidebar for logged-in users */}
         {session?.user && (
           <div className="hidden md:block h-[calc(100vh-3.5rem)] flex">
@@ -221,14 +229,16 @@ export default function AuthPage() {
           {!session?.user && <AuthSlideshow />}
 
           {/* Right Section - Auth Form */}
-          <div className={`${session?.user ? 'w-full' : 'w-full lg:w-1/2'} flex justify-center p-8 bg-background min-h-[calc(100vh-3.5rem)]`}>
+          <div className={`${session?.user ? 'w-full' : 'w-full lg:w-1/2'} flex justify-center p-8 min-h-[calc(100vh-3.5rem)]`}>
           <div className="w-full max-w-md space-y-6 flex flex-col justify-center">
+            {/* Auth Form Container with Glassmorphism */}
+            <div className="bg-white/20 dark:bg-white/10 backdrop-blur-md rounded-xl border border-white/30 dark:border-white/20 shadow-lg p-8">
             {/* Header */}
             <div className="text-center">
-              <h1 className="text-2xl font-bold text-foreground">
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                 {activeTab === 'signin' ? 'Sign in to your account' : 'Create an account'}
               </h1>
-              <p className="mt-2 text-sm text-muted-foreground">
+              <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
                 {activeTab === 'signin' 
                   ? 'Enter your email below to sign in to your account'
                   : 'Enter your email below to create your account'
@@ -238,16 +248,16 @@ export default function AuthPage() {
 
             {/* Error Display */}
             {error && (
-              <div className="p-3 bg-red-50 border border-red-200 rounded-md dark:bg-red-500/20 dark:border-red-500/30">
+              <div className="p-4 bg-red-500/20 backdrop-blur-md border border-red-500/30 rounded-xl">
                 <p className="text-sm text-red-600 dark:text-red-200">{error}</p>
               </div>
             )}
 
             {/* Tabs */}
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid w-full grid-cols-2 bg-muted">
-                <TabsTrigger value="signin" className="data-[state=active]:bg-background data-[state=active]:text-foreground text-muted-foreground">Sign In</TabsTrigger>
-                <TabsTrigger value="register" className="data-[state=active]:bg-background data-[state=active]:text-foreground text-muted-foreground">Register</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-2 bg-white/20 dark:bg-white/10 backdrop-blur-sm border border-white/30 dark:border-white/20 rounded-lg">
+                <TabsTrigger value="signin" className="data-[state=active]:bg-white/30 dark:data-[state=active]:bg-white/20 data-[state=active]:text-gray-900 dark:data-[state=active]:text-gray-100 text-gray-600 dark:text-gray-400 rounded-lg">Sign In</TabsTrigger>
+                <TabsTrigger value="register" className="data-[state=active]:bg-white/30 dark:data-[state=active]:bg-white/20 data-[state=active]:text-gray-900 dark:data-[state=active]:text-gray-100 text-gray-600 dark:text-gray-400 rounded-lg">Register</TabsTrigger>
               </TabsList>
 
               {/* Sign In Tab */}
@@ -263,7 +273,7 @@ export default function AuthPage() {
                             <Input 
                               type="email" 
                               placeholder="name@example.com" 
-                              className="h-10 bg-background border border-input text-foreground hover:bg-accent hover:text-accent-foreground"
+                              className="h-10 bg-white/20 dark:bg-white/10 backdrop-blur-sm border border-white/30 dark:border-white/20 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 rounded-lg"
                               {...field} 
                             />
                           </FormControl>
@@ -281,7 +291,7 @@ export default function AuthPage() {
                             <Input 
                               type="password" 
                               placeholder="Password"
-                              className="h-10 bg-background border border-input text-foreground hover:bg-accent hover:text-accent-foreground"
+                              className="h-10 bg-white/20 dark:bg-white/10 backdrop-blur-sm border border-white/30 dark:border-white/20 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 rounded-lg"
                               {...field} 
                             />
                           </FormControl>
@@ -290,28 +300,28 @@ export default function AuthPage() {
                       )}
                     />
 
-                    <Button type="submit" className="w-full h-10" disabled={isLoading}>
-                      {isLoading ? 'Signing In...' : 'Sign In with Email'}
-                    </Button>
+                      <DynamicButton type="submit" variant="primary" className="w-full h-10" disabled={isLoading}>
+                        {isLoading ? 'Signing In...' : 'Sign In with Email'}
+                      </DynamicButton>
                   </form>
                 </Form>
 
                 <div className="relative">
                   <div className="absolute inset-0 flex items-center">
-                    <span className="w-full border-t border-gray-300" />
+                    <span className="w-full border-t border-white/30 dark:border-white/20" />
                   </div>
                   <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-background px-3 text-gray-500">Or continue with</span>
+                    <span className="bg-white/20 dark:bg-white/10 backdrop-blur-sm px-3 text-gray-600 dark:text-gray-400 rounded-lg">Or continue with</span>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
-                  <Button 
-                    variant="outline" 
-                    onClick={() => handleSocialSignIn('google')} 
-                    disabled={isLoading}
-                    className="h-10 bg-background border border-input text-foreground hover:bg-accent hover:text-accent-foreground"
-                  >
+                    <DynamicButton 
+                      variant="outline" 
+                      onClick={() => handleSocialSignIn('google')} 
+                      disabled={isLoading}
+                      className="h-10"
+                    >
                     <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
                       <path
                         d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -331,18 +341,18 @@ export default function AuthPage() {
                       />
                     </svg>
                     Google
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    onClick={() => handleSocialSignIn('facebook')} 
-                    disabled={isLoading}
-                    className="h-10 bg-background border border-input text-foreground hover:bg-accent hover:text-accent-foreground"
-                  >
+                    </DynamicButton>
+                    <DynamicButton 
+                      variant="outline" 
+                      onClick={() => handleSocialSignIn('facebook')} 
+                      disabled={isLoading}
+                      className="h-10"
+                    >
                     <svg className="mr-2 h-4 w-4" fill="#1877F2" viewBox="0 0 24 24">
                       <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                     </svg>
                     Facebook
-                  </Button>
+                    </DynamicButton>
                 </div>
               </TabsContent>
 
@@ -359,7 +369,7 @@ export default function AuthPage() {
                             <FormControl>
                               <Input 
                                 placeholder="First name" 
-                                className="h-10 bg-background border border-input text-foreground hover:bg-accent hover:text-accent-foreground" 
+                                className="h-10 bg-white/20 dark:bg-white/10 backdrop-blur-sm border border-white/30 dark:border-white/20 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 rounded-lg" 
                                 {...field} 
                               />
                             </FormControl>
@@ -376,7 +386,7 @@ export default function AuthPage() {
                             <FormControl>
                               <Input 
                                 placeholder="Last name" 
-                                className="h-10 bg-background border border-input text-foreground hover:bg-accent hover:text-accent-foreground" 
+                                className="h-10 bg-white/20 dark:bg-white/10 backdrop-blur-sm border border-white/30 dark:border-white/20 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 rounded-lg" 
                                 {...field} 
                               />
                             </FormControl>
@@ -395,7 +405,7 @@ export default function AuthPage() {
                             <Input 
                               type="email" 
                               placeholder="name@example.com" 
-                              className="h-10 bg-background border border-input text-foreground hover:bg-accent hover:text-accent-foreground" 
+                              className="h-10 bg-white/20 dark:bg-white/10 backdrop-blur-sm border border-white/30 dark:border-white/20 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 rounded-lg" 
                               {...field} 
                             />
                           </FormControl>
@@ -413,7 +423,7 @@ export default function AuthPage() {
                             <Input 
                               type="password" 
                               placeholder="Password" 
-                              className="h-10 bg-background border border-input text-foreground hover:bg-accent hover:text-accent-foreground" 
+                              className="h-10 bg-white/20 dark:bg-white/10 backdrop-blur-sm border border-white/30 dark:border-white/20 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 rounded-lg" 
                               {...field} 
                             />
                           </FormControl>
@@ -431,7 +441,7 @@ export default function AuthPage() {
                             <Input 
                               type="password" 
                               placeholder="Confirm Password" 
-                              className="h-10 bg-background border border-input text-foreground hover:bg-accent hover:text-accent-foreground" 
+                              className="h-10 bg-white/20 dark:bg-white/10 backdrop-blur-sm border border-white/30 dark:border-white/20 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 rounded-lg" 
                               {...field} 
                             />
                           </FormControl>
@@ -448,7 +458,7 @@ export default function AuthPage() {
                           <FormItem>
                             <FormControl>
                               <select 
-                                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" 
+                                className="flex h-10 w-full rounded-lg border border-white/30 dark:border-white/20 bg-white/20 dark:bg-white/10 backdrop-blur-sm px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2" 
                                 {...field}
                               >
                                 <option value="Male">Male</option>
@@ -468,7 +478,7 @@ export default function AuthPage() {
                             <FormControl>
                               <Input 
                                 type="date" 
-                                className="h-10 bg-background border border-input text-foreground hover:bg-accent hover:text-accent-foreground" 
+                                className="h-10 bg-white/20 dark:bg-white/10 backdrop-blur-sm border border-white/30 dark:border-white/20 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 rounded-lg" 
                                 {...field} 
                               />
                             </FormControl>
@@ -487,7 +497,7 @@ export default function AuthPage() {
                             <Input 
                               type="tel" 
                               placeholder="Mobile Number" 
-                              className="h-10 bg-background border border-input text-foreground hover:bg-accent hover:text-accent-foreground" 
+                              className="h-10 bg-white/20 dark:bg-white/10 backdrop-blur-sm border border-white/30 dark:border-white/20 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 rounded-lg" 
                               {...field} 
                             />
                           </FormControl>
@@ -519,28 +529,28 @@ export default function AuthPage() {
                       )}
                     />
 
-                    <Button type="submit" className="w-full h-10" disabled={isLoading}>
-                      {isLoading ? 'Creating Account...' : 'Create Account'}
-                    </Button>
+                      <DynamicButton type="submit" variant="primary" className="w-full h-10" disabled={isLoading}>
+                        {isLoading ? 'Creating Account...' : 'Create Account'}
+                      </DynamicButton>
                   </form>
                 </Form>
 
                 <div className="relative">
                   <div className="absolute inset-0 flex items-center">
-                    <span className="w-full border-t border-gray-300" />
+                    <span className="w-full border-t border-white/30 dark:border-white/20" />
                   </div>
                   <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-background px-3 text-gray-500">Or continue with</span>
+                    <span className="bg-white/20 dark:bg-white/10 backdrop-blur-sm px-3 text-gray-600 dark:text-gray-400 rounded-lg">Or continue with</span>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
-                  <Button 
-                    variant="outline" 
-                    onClick={() => handleSocialSignIn('google')} 
-                    disabled={isLoading}
-                    className="h-10 bg-background border border-input text-foreground hover:bg-accent hover:text-accent-foreground"
-                  >
+                    <DynamicButton 
+                      variant="outline" 
+                      onClick={() => handleSocialSignIn('google')} 
+                      disabled={isLoading}
+                      className="h-10"
+                    >
                     <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
                       <path
                         d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -560,34 +570,35 @@ export default function AuthPage() {
                       />
                     </svg>
                     Google
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    onClick={() => handleSocialSignIn('facebook')} 
-                    disabled={isLoading}
-                    className="h-10 bg-background border border-input text-foreground hover:bg-accent hover:text-accent-foreground"
-                  >
+                    </DynamicButton>
+                    <DynamicButton 
+                      variant="outline" 
+                      onClick={() => handleSocialSignIn('facebook')} 
+                      disabled={isLoading}
+                      className="h-10"
+                    >
                     <svg className="mr-2 h-4 w-4" fill="#1877F2" viewBox="0 0 24 24">
                       <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                     </svg>
                     Facebook
-                  </Button>
+                    </DynamicButton>
                 </div>
               </TabsContent>
             </Tabs>
 
             {/* Footer */}
-            <p className="text-center text-xs text-muted-foreground">
+            <p className="text-center text-xs text-gray-600 dark:text-gray-400">
               By clicking continue, you agree to our{' '}
-              <span className="underline underline-offset-4 cursor-pointer hover:text-foreground">
+              <span className="underline underline-offset-4 cursor-pointer hover:text-gray-900 dark:hover:text-gray-100">
                 Terms of Service
               </span>{' '}
               and{' '}
-              <span className="underline underline-offset-4 cursor-pointer hover:text-foreground">
+              <span className="underline underline-offset-4 cursor-pointer hover:text-gray-900 dark:hover:text-gray-100">
                 Privacy Policy
               </span>
               .
             </p>
+            </div>
           </div>
         </div>
       </div>

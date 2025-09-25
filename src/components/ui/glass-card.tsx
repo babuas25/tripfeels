@@ -1,6 +1,6 @@
 import * as React from "react"
 import { cn } from "@/lib/utils"
-import { variants } from "@/lib/design-tokens"
+import { components } from "@/lib/design-tokens"
 
 export interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: 'default' | 'glass'
@@ -11,7 +11,7 @@ const GlassCard = React.forwardRef<HTMLDivElement, GlassCardProps>(
     <div
       ref={ref}
       className={cn(
-        variant === 'glass' ? variants.card.glass : variants.card.default,
+        components.card.default,
         className
       )}
       {...props}

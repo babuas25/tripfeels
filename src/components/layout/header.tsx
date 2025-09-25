@@ -29,6 +29,7 @@ import {
 } from 'lucide-react'
 import { NAVIGATION_ITEMS } from '@/lib/utils/constants'
 import { Button } from '@/components/ui/button'
+import { useDynamicThemeColors } from '@/lib/dynamic-theme-colors'
 import { GlassButton } from '@/components/ui/glass-button'
 import { cn } from '@/lib/utils'
 import { useTheme } from '@/components/providers/theme-provider'
@@ -64,6 +65,7 @@ export function Header({ className, showNavigation = true, showUserActions = tru
   const pathname = usePathname()
   const { theme, setTheme } = useTheme()
   const { logoType, textLogo, logoImage } = useThemeContext()
+  const themeColors = useDynamicThemeColors()
   
   // State for dropdown visibility
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false)
@@ -94,7 +96,7 @@ export function Header({ className, showNavigation = true, showUserActions = tru
 
   return (
     <header className={cn(
-      "fixed top-0 left-0 right-0 z-40 h-14 backdrop-blur-md bg-background/80 border-b border-border shadow-sm",
+      "fixed top-0 left-0 right-0 z-40 h-14 backdrop-blur-md bg-white/20 dark:bg-white/10 border-b border-white/30 dark:border-white/20 shadow-lg",
       className
     )}>
       <div className="flex items-center justify-between px-4 h-full max-w-7xl mx-auto">
@@ -104,14 +106,14 @@ export function Header({ className, showNavigation = true, showUserActions = tru
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden h-8 w-8 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100/60 dark:hover:bg-gray-800/60 backdrop-blur-sm"
+            className="md:hidden h-8 w-8 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-white/20 dark:hover:bg-white/10 backdrop-blur-sm rounded-lg"
             onClick={onMobileMenuToggle}
           >
-            <Menu className="h-4 w-4 text-foreground" />
+            <Menu className="h-4 w-4" />
           </Button>
           
           {/* Logo Section */}
-          <Link href="/" className={cn("text-lg font-semibold font-logo", colors.text.primary, "hover:text-muted-foreground", animations.transition)}>
+          <Link href="/" className={cn("text-lg font-semibold font-logo text-gray-900 dark:text-gray-100 hover:text-gray-600 dark:hover:text-gray-400", animations.transition)}>
             {logoType === 'image' && logoImage ? (
               <img 
                 src={logoImage} 
@@ -129,10 +131,10 @@ export function Header({ className, showNavigation = true, showUserActions = tru
         <div className="flex items-center space-x-3">
           {/* Theme Toggle */}
           <div className="relative group">
-            <GlassButton
-              variant="glass"
+            <Button
+              variant="ghost"
               size="sm"
-              className="h-8 px-2 hover:bg-background/90 border-border/30"
+              className="h-8 px-2 hover:bg-white/20 dark:hover:bg-white/10 border border-white/30 dark:border-white/20 bg-white/10 dark:bg-white/5 backdrop-blur-sm rounded-lg"
               onClick={() => {
                 if (theme === 'light') setTheme('dark')
                 else if (theme === 'dark') setTheme('system')
@@ -140,49 +142,49 @@ export function Header({ className, showNavigation = true, showUserActions = tru
               }}
             >
               {theme === 'light' ? (
-                <Sun className="h-4 w-4 text-foreground" />
+                <Sun className="h-4 w-4 text-gray-900 dark:text-gray-100" />
               ) : theme === 'dark' ? (
-                <Moon className="h-4 w-4 text-foreground" />
+                <Moon className="h-4 w-4 text-gray-900 dark:text-gray-100" />
               ) : (
-                <Monitor className="h-4 w-4 text-foreground" />
+                <Monitor className="h-4 w-4 text-gray-900 dark:text-gray-100" />
               )}
-            </GlassButton>
+            </Button>
           </div>
           {/* User Actions */}
           {showUserActions && status === 'loading' ? (
-            <div className="h-8 w-8 bg-background/20 rounded-full animate-pulse"></div>
+            <div className="h-8 w-8 bg-white/20 dark:bg-white/10 rounded-full animate-pulse"></div>
           ) : showUserActions && session?.user ? (
             <div className="relative" ref={userDropdownRef}>
               {/* User Icon Button */}
-              <GlassButton
-                variant="glass"
+              <Button
+                variant="ghost"
                 size="sm"
-                className="h-8 w-8 p-0 hover:bg-background/90 border-border/30"
+                className="h-8 w-8 p-0 hover:bg-white/20 dark:hover:bg-white/10 border border-white/30 dark:border-white/20 bg-white/10 dark:bg-white/5 backdrop-blur-sm rounded-lg"
                 onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
               >
-                <div className="w-6 h-6 bg-primary/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-primary/30">
-                  <span className="text-xs font-medium text-primary">
+                <div className={`w-6 h-6 backdrop-blur-sm rounded-full flex items-center justify-center border ${themeColors.primary.replace('bg-', 'bg-').replace('/90', '/20')} ${themeColors.primaryBorder}`}>
+                  <span className={`text-xs font-medium ${themeColors.primaryText}`}>
                     {session.user.name?.split(' ').map(n => n[0]).join('').toUpperCase() || 'U'}
                   </span>
                 </div>
-              </GlassButton>
+              </Button>
               
               {/* Dropdown Menu */}
               {isUserDropdownOpen && (
-                <div className={cn("absolute right-0 top-full mt-1 w-48 rounded-md shadow-lg z-50", colors.glass.card)}>
+                <div className="absolute right-0 top-full mt-1 w-48 rounded-xl shadow-lg z-50 bg-white/20 dark:bg-white/10 backdrop-blur-md border border-white/30 dark:border-white/20">
                   <div className="py-2">
-                    <div className={cn("px-4 py-2 border-b", colors.border.muted)}>
-                      <p className={cn("text-sm font-medium", colors.text.primary)}>{session.user.name}</p>
-                      <p className={cn("text-xs", colors.text.secondary)}>{session.user.role}</p>
+                    <div className="px-4 py-2 border-b border-white/20 dark:border-white/10">
+                      <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{session.user.name}</p>
+                      <p className="text-xs text-gray-600 dark:text-gray-400">{session.user.role}</p>
                     </div>
                     <button
                       onClick={() => {
                         setIsUserDropdownOpen(false)
                         signOut({ callbackUrl: '/' })
                       }}
-                      className={cn("w-full text-left px-4 py-2 text-sm flex items-center gap-2", colors.text.secondary, colors.interactive.hover)}
+                      className="w-full text-left px-4 py-2 text-sm flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:bg-white/10 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-gray-100 transition-all duration-200"
                     >
-                      <LogOut className="h-4 w-4 text-foreground" />
+                      <LogOut className="h-4 w-4" />
                       Sign Out
                     </button>
                   </div>
@@ -195,12 +197,12 @@ export function Header({ className, showNavigation = true, showUserActions = tru
               {/* Desktop: Show individual buttons */}
               <div className="hidden md:flex items-center space-x-2">
                 <Link href="/auth">
-                  <Button variant="outline" size="sm" className="bg-background/20 border-border/30 text-foreground hover:bg-background/40 hover:text-foreground">
+                  <Button variant="outline" size="sm" className="bg-white/20 dark:bg-white/10 backdrop-blur-sm border border-white/30 dark:border-white/20 text-gray-900 dark:text-gray-100 hover:bg-white/30 dark:hover:bg-white/20 rounded-lg">
                     Sign In
                   </Button>
                 </Link>
                 <Link href="/auth">
-                  <Button variant="outline" size="sm" className="bg-background/20 border-border/30 text-foreground hover:bg-background/40 hover:text-foreground">
+                  <Button variant="outline" size="sm" className="bg-white/20 dark:bg-white/10 backdrop-blur-sm border border-white/30 dark:border-white/20 text-gray-900 dark:text-gray-100 hover:bg-white/30 dark:hover:bg-white/20 rounded-lg">
                     Registration
                   </Button>
                 </Link>
@@ -208,30 +210,30 @@ export function Header({ className, showNavigation = true, showUserActions = tru
               
               {/* Mobile: Show dropdown */}
               <div className="md:hidden relative" ref={mobileDropdownRef}>
-                <GlassButton
-                  variant="glass"
+                <Button
+                  variant="ghost"
                   size="sm"
-                  className="flex items-center gap-1 hover:bg-background/90 border-border/30"
+                  className="flex items-center gap-1 hover:bg-white/20 dark:hover:bg-white/10 border border-white/30 dark:border-white/20 bg-white/10 dark:bg-white/5 backdrop-blur-sm rounded-lg"
                   onClick={() => setIsMobileDropdownOpen(!isMobileDropdownOpen)}
                 >
-                  <UserCircle className="h-4 w-4 text-foreground" />
-                  <ChevronDown className="h-3 w-3 text-foreground" />
-                </GlassButton>
+                  <UserCircle className="h-4 w-4 text-gray-900 dark:text-gray-100" />
+                  <ChevronDown className="h-3 w-3 text-gray-900 dark:text-gray-100" />
+                </Button>
                 
                 {/* Dropdown Menu */}
                 {isMobileDropdownOpen && (
-                  <div className={cn("absolute right-0 top-full mt-1 w-48 rounded-md shadow-lg z-50", colors.glass.card)}>
+                  <div className="absolute right-0 top-full mt-1 w-48 rounded-xl shadow-lg z-50 bg-white/20 dark:bg-white/10 backdrop-blur-md border border-white/30 dark:border-white/20">
                     <div className="py-1">
                       <Link 
                         href="/auth" 
-                        className={cn("block px-4 py-2 text-sm", colors.text.secondary, colors.interactive.hover)}
+                        className="block px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:bg-white/10 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-gray-100 transition-all duration-200"
                         onClick={() => setIsMobileDropdownOpen(false)}
                       >
                         Sign In
                       </Link>
                       <Link 
                         href="/auth" 
-                        className={cn("block px-4 py-2 text-sm", colors.text.secondary, colors.interactive.hover)}
+                        className="block px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:bg-white/10 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-gray-100 transition-all duration-200"
                         onClick={() => setIsMobileDropdownOpen(false)}
                       >
                         Registration

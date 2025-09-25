@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { deleteSlide, listSlides, type SlideDocument, updateSlide } from '@/lib/firebase/slides'
 import { Button } from '@/components/ui/button'
+import { DynamicButton } from '@/components/ui/dynamic-theme-components'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Plus, Trash2, Save } from 'lucide-react'
@@ -59,37 +60,58 @@ export default function SlideshowManager() {
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="md:col-span-2 space-y-2">
-          <Label>Image URL</Label>
-          <Input placeholder="https://..." value={newSrc} onChange={(e) => setNewSrc(e.target.value)} />
+          <Label className="text-gray-900 dark:text-gray-100">Image URL</Label>
+          <Input 
+            placeholder="https://..." 
+            value={newSrc} 
+            onChange={(e) => setNewSrc(e.target.value)}
+            className="bg-white/20 dark:bg-white/10 backdrop-blur-sm border border-white/30 dark:border-white/20 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 rounded-lg"
+          />
         </div>
         <div className="space-y-2">
-          <Label>Alt text</Label>
-          <Input placeholder="Describe the image" value={newAlt} onChange={(e) => setNewAlt(e.target.value)} />
+          <Label className="text-gray-900 dark:text-gray-100">Alt text</Label>
+          <Input 
+            placeholder="Describe the image" 
+            value={newAlt} 
+            onChange={(e) => setNewAlt(e.target.value)}
+            className="bg-white/20 dark:bg-white/10 backdrop-blur-sm border border-white/30 dark:border-white/20 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 rounded-lg"
+          />
         </div>
       </div>
       <div>
-        <Button onClick={handleAdd} disabled={isSaving} className="flex items-center gap-2">
+        <DynamicButton 
+          variant="primary"
+          onClick={handleAdd} 
+          disabled={isSaving} 
+          className="flex items-center gap-2"
+        >
           <Plus className="h-4 w-4" />
           Add Slide
-        </Button>
+        </DynamicButton>
       </div>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {slides.map((s) => (
-          <div key={s.id} className="border rounded-lg overflow-hidden">
-            <div className="aspect-video bg-gray-100 relative">
+          <div key={s.id} className="bg-white/20 dark:bg-white/10 backdrop-blur-md rounded-xl border border-white/30 dark:border-white/20 shadow-lg overflow-hidden">
+            <div className="aspect-video bg-gray-100 dark:bg-gray-800 relative">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={s.src} alt={s.alt ?? ''} className="w-full h-full object-cover" />
             </div>
-            <div className="p-3 space-y-2">
-              <Label className="text-xs">Alt text</Label>
+            <div className="p-4 space-y-3">
+              <Label className="text-xs text-gray-900 dark:text-gray-100">Alt text</Label>
               <Input
                 defaultValue={s.alt ?? ''}
                 onBlur={(e) => handleAltUpdate(s.id, e.target.value)}
                 placeholder="Describe this image"
+                className="bg-white/20 dark:bg-white/10 backdrop-blur-sm border border-white/30 dark:border-white/20 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 rounded-lg"
               />
               <div className="flex justify-end">
-                <Button variant="outline" size="sm" onClick={() => handleDelete(s.id)} className="flex items-center gap-2">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => handleDelete(s.id)} 
+                  className="flex items-center gap-2 bg-white/20 dark:bg-white/10 backdrop-blur-sm border border-white/30 dark:border-white/20 text-gray-900 dark:text-gray-100 hover:bg-white/30 dark:hover:bg-white/20 transition-all duration-300 rounded-lg"
+                >
                   <Trash2 className="h-4 w-4" />
                   Delete
                 </Button>

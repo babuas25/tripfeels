@@ -2,18 +2,18 @@ import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
-import { variants, animations } from "@/lib/design-tokens"
+import { components, animations } from "@/lib/design-tokens"
 
 const glassButtonVariants = cva(
   "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
-        default: variants.button.primary,
-        destructive: variants.button.destructive,
-        outline: variants.button.outline,
-        secondary: variants.button.secondary,
-        ghost: variants.button.ghost,
+        default: components.button.primary,
+        destructive: components.button.error,
+        outline: components.button.outline,
+        secondary: components.button.secondary,
+        ghost: components.button.ghost,
         link: "text-primary underline-offset-4 hover:underline",
         glass: "backdrop-blur-sm bg-background/60 border border-border/20 hover:bg-background/80 text-foreground",
       },

@@ -29,7 +29,7 @@ export function AuthSlideshow() {
   }, [slides.length])
 
   if (slides.length === 0) {
-    return <div className="relative hidden lg:block lg:w-1/2 overflow-hidden bg-gradient-to-br from-indigo-600 to-purple-600" />
+    return <div className="relative hidden lg:block lg:w-1/2 overflow-hidden bg-gradient-to-br from-slate-100 via-blue-100 to-indigo-200 dark:from-slate-800 dark:via-slate-700 dark:to-indigo-800" />
   }
 
   return (
@@ -44,13 +44,13 @@ export function AuthSlideshow() {
             }`}
           >
             <img src={slide.src} alt={slide.alt ?? ""} className="w-full h-full object-cover absolute inset-0" />
-            <div className="absolute inset-0 bg-gradient-to-tr from-indigo-900/70 via-indigo-700/40 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-tr from-slate-900/60 via-slate-700/30 to-transparent" />
             {slide.alt && (
               <div className="absolute bottom-8 left-8 right-8">
-                <blockquote className="max-w-md text-white text-lg leading-relaxed">
-                  “{slide.alt}”
+                <blockquote className="max-w-md text-white text-lg leading-relaxed backdrop-blur-sm bg-white/10 rounded-lg p-4 border border-white/20">
+                  &ldquo;{slide.alt}&rdquo;
                 </blockquote>
-                <div className="mt-2 h-1 w-24 bg-white/70" />
+                <div className="mt-2 h-1 w-24 bg-white/70 rounded-full" />
               </div>
             )}
           </div>
@@ -58,11 +58,11 @@ export function AuthSlideshow() {
       })}
 
       {/* Dots */}
-      <div className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
+      <div className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 backdrop-blur-sm bg-white/10 rounded-full p-2 border border-white/20">
         {slides.map((s, i) => (
           <span
             key={s.id}
-            className={`h-1.5 w-6 rounded-full ${i === index ? "bg-white" : "bg-white/40"}`}
+            className={`h-1.5 w-6 rounded-full transition-all duration-300 ${i === index ? "bg-white" : "bg-white/40"}`}
           />
         ))}
       </div>
