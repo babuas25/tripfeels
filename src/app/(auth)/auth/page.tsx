@@ -27,8 +27,17 @@ export default function AuthPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [activeTab, setActiveTab] = useState('signin')
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false)
   const router = useRouter()
   const { data: session } = useSession()
+
+  const toggleMobileSidebar = () => {
+    setIsMobileSidebarOpen(!isMobileSidebarOpen)
+  }
+
+  const closeMobileSidebar = () => {
+    setIsMobileSidebarOpen(false)
+  }
 
   // Sign In Form
   const signInForm = useForm<SignInFormData>({
@@ -171,14 +180,38 @@ export default function AuthPage() {
 
   return (
     <div className="min-h-screen">
-      <Header showNavigation={false} showUserActions={true} />
+      <Header 
+        showNavigation={false} 
+        showUserActions={true} 
+        onMobileMenuToggle={toggleMobileSidebar}
+      />
       
       {/* Main content with sidebar for logged-in users */}
       <div className="flex pt-14 min-h-[calc(100vh-3.5rem)]">
-        {/* Sidebar for logged-in users */}
+        {/* Desktop Sidebar for logged-in users */}
         {session?.user && (
-          <div className="flex">
+          <div className="hidden md:block h-[calc(100vh-3.5rem)] flex">
             <Sidebar />
+          </div>
+        )}
+        
+        {/* Mobile Sidebar Overlay for logged-in users */}
+        {session?.user && isMobileSidebarOpen && (
+          <div 
+            className="fixed inset-0 z-50 md:hidden"
+            onClick={closeMobileSidebar}
+          >
+            {/* Backdrop */}
+            <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
+            
+            {/* Sidebar */}
+            <div className="relative h-full w-64">
+              <Sidebar 
+                isMobile={true}
+                onClose={closeMobileSidebar}
+                className="h-full"
+              />
+            </div>
           </div>
         )}
         

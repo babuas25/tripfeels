@@ -1,18 +1,57 @@
+'use client'
+
+import { useState } from 'react'
 import { Header } from '@/components/layout/header'
 import { Sidebar } from '@/components/layout/sidebar'
 import { AuthSessionProvider } from '@/components/providers/session-provider'
 
 export default function HomePage() {
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false)
+
+  const toggleMobileSidebar = () => {
+    setIsMobileSidebarOpen(!isMobileSidebarOpen)
+  }
+
+  const closeMobileSidebar = () => {
+    setIsMobileSidebarOpen(false)
+  }
+
   return (
     <AuthSessionProvider>
       <div className="min-h-screen">
-        <Header showNavigation={false} showUserActions={true} />
+        <Header 
+          showNavigation={false} 
+          showUserActions={true} 
+          onMobileMenuToggle={toggleMobileSidebar}
+        />
         
         {/* Main content with sidebar for logged-in users */}
         <div className="flex pt-14">
-          <div className="h-[calc(100vh-3.5rem)] flex">
+          {/* Desktop Sidebar */}
+          <div className="hidden md:block h-[calc(100vh-3.5rem)] flex">
             <Sidebar />
           </div>
+          
+          {/* Mobile Sidebar Overlay */}
+          {isMobileSidebarOpen && (
+            <div 
+              className="fixed inset-0 z-50 md:hidden"
+              onClick={closeMobileSidebar}
+            >
+              {/* Backdrop */}
+              <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
+              
+              {/* Sidebar */}
+              <div className="relative h-full w-64">
+                <Sidebar 
+                  isMobile={true}
+                  onClose={closeMobileSidebar}
+                  className="h-full"
+                />
+              </div>
+            </div>
+          )}
+          
           <main className="flex-1 overflow-auto p-6">
             {/* Your page content goes here */}
             <div className="space-y-6">
