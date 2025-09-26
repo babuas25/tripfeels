@@ -10,6 +10,14 @@ export async function PATCH(
   { params }: { params: Promise<{ uid: string }> }
 ) {
   try {
+    // Check Firebase Admin configuration
+    if (!process.env.FIREBASE_PROJECT_ID || !process.env.FIREBASE_CLIENT_EMAIL || !process.env.FIREBASE_PRIVATE_KEY) {
+      console.error('Firebase Admin environment variables are missing')
+      return NextResponse.json({ 
+        error: 'Server configuration error: Firebase Admin credentials not configured' 
+      }, { status: 500 })
+    }
+
     const session = await getServerSession(authOptions)
     const role = session?.user?.role as string | undefined
 
@@ -38,7 +46,11 @@ export async function PATCH(
     await adminDb.collection('users').doc(uid).update(updates)
     return NextResponse.json({ ok: true })
   } catch (err) {
-    return NextResponse.json({ error: 'Failed to update user' }, { status: 500 })
+    console.error('Error updating user:', err)
+    return NextResponse.json({ 
+      error: 'Failed to update user',
+      details: process.env.NODE_ENV === 'development' ? err.message : undefined
+    }, { status: 500 })
   }
 }
 

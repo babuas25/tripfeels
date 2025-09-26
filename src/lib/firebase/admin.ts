@@ -8,6 +8,15 @@ const firebaseAdminConfig = {
   privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
 }
 
+// Validate Firebase Admin configuration
+if (!firebaseAdminConfig.projectId || !firebaseAdminConfig.clientEmail || !firebaseAdminConfig.privateKey) {
+  console.error('Firebase Admin configuration is incomplete:', {
+    hasProjectId: !!firebaseAdminConfig.projectId,
+    hasClientEmail: !!firebaseAdminConfig.clientEmail,
+    hasPrivateKey: !!firebaseAdminConfig.privateKey,
+  })
+}
+
 // Initialize Firebase Admin
 const app = getApps().length === 0 
   ? initializeApp({
