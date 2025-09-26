@@ -134,6 +134,8 @@ export default function SuperAdminUserManagement() {
 
           <div className="flex gap-2">
             <input
+              id="user-search"
+              name="user-search"
               type="text"
               placeholder="Search by name, email, or category"
               className="h-9 w-64 rounded-lg border border-white/30 bg-white/20 backdrop-blur-sm px-3 text-sm text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
@@ -141,6 +143,8 @@ export default function SuperAdminUserManagement() {
               onChange={(e) => setSearch(e.target.value)}
             />
             <select
+              id="role-filter"
+              name="role-filter"
               className="h-9 rounded-lg border border-white/30 bg-white/20 backdrop-blur-sm px-3 text-sm text-gray-900 dark:text-gray-100"
               value={roleFilter}
               onChange={(e) => setRoleFilter(e.target.value as RoleType | 'All')}
@@ -187,6 +191,8 @@ export default function SuperAdminUserManagement() {
                     <td className="px-4 py-3 text-gray-900 dark:text-gray-100">{user.email}</td>
                     <td className="px-4 py-3">
                       <select
+                        id={`role-${user.uid}`}
+                        name={`role-${user.uid}`}
                         className="h-8 rounded-lg border border-white/30 bg-white/20 backdrop-blur-sm px-2 text-gray-900 dark:text-gray-100"
                         value={user.role}
                         onChange={(e) => handleRoleChange(user, e.target.value as RoleType)}
@@ -199,6 +205,8 @@ export default function SuperAdminUserManagement() {
                     </td>
                     <td className="px-4 py-3">
                       <input
+                        id={`category-${user.uid}`}
+                        name={`category-${user.uid}`}
                         type="text"
                         className="h-8 w-40 rounded-lg border border-white/30 bg-white/20 backdrop-blur-sm px-2 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
                         value={user.category ?? ''}
