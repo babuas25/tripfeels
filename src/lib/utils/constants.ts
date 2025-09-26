@@ -61,6 +61,18 @@ export const DASHBOARD_ROUTES = {
   [ROLES.USER]: '/users/publicuser'
 } as const
 
+// Role-based categories
+export const ROLE_CATEGORIES = {
+  [ROLES.SUPER_ADMIN]: ['Admin'],
+  [ROLES.ADMIN]: ['Admin'],
+  [ROLES.STAFF]: ['Accounts', 'Support', 'Key Manager', 'Research', 'Media', 'Sales'],
+  [ROLES.PARTNER]: ['Supplier', 'Service Provider'],
+  [ROLES.AGENT]: ['Distributor', 'Franchise', 'B2B'],
+  [ROLES.USER]: ['Default']
+} as const
+
+export type CategoryType = string
+
 // Special admin emails
 export const SUPER_ADMIN_EMAILS = [
   'babuas25@gmail.com',
