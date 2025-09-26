@@ -15,8 +15,8 @@ export async function GET() {
     console.error('Firebase Admin test failed:', error)
     return NextResponse.json({ 
       success: false, 
-      error: error.message,
-      details: process.env.NODE_ENV === 'development' ? error.stack : undefined
+      error: error instanceof Error ? error.message : String(error),
+      details: process.env.NODE_ENV === 'development' ? (error instanceof Error ? error.stack : undefined) : undefined
     }, { status: 500 })
   }
 }

@@ -49,7 +49,7 @@ export async function PATCH(
     console.error('Error updating user:', err)
     return NextResponse.json({ 
       error: 'Failed to update user',
-      details: process.env.NODE_ENV === 'development' ? err.message : undefined
+      details: process.env.NODE_ENV === 'development' ? (err instanceof Error ? err.message : String(err)) : undefined
     }, { status: 500 })
   }
 }

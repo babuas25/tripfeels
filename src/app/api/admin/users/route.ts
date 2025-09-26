@@ -27,7 +27,7 @@ export async function GET() {
     console.error('Error fetching users:', err)
     return NextResponse.json({ 
       error: 'Failed to fetch users',
-      details: process.env.NODE_ENV === 'development' ? err.message : undefined
+      details: process.env.NODE_ENV === 'development' ? (err instanceof Error ? err.message : String(err)) : undefined
     }, { status: 500 })
   }
 }
