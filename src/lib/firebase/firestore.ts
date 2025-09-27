@@ -51,16 +51,33 @@ export const createUser = async (userData: Partial<UserDocument>) => {
   if (!userData.uid) throw new Error('User ID is required')
   
   const userRef = doc(db, 'users', userData.uid)
-  await setDoc(userRef, {
-    ...userData,
+  const now = Timestamp.now()
+  
+  const userDoc = {
+    uid: userData.uid,
+    email: userData.email || '',
+    role: userData.role || 'User',
+    category: userData.category || '',
+    profile: {
+      firstName: userData.profile?.firstName || '',
+      lastName: userData.profile?.lastName || '',
+      gender: userData.profile?.gender || 'Other',
+      dateOfBirth: userData.profile?.dateOfBirth || '',
+      mobile: userData.profile?.mobile || '',
+      avatar: userData.profile?.avatar || ''
+    },
     metadata: {
-      ...userData.metadata,
-      createdAt: Timestamp.now(),
-      lastLoginAt: Timestamp.now(),
+      createdAt: now,
+      lastLoginAt: now,
       isActive: true,
       emailVerified: false,
-    }
-  })
+    },
+    permissions: userData.permissions || [],
+    assignedBy: userData.assignedBy || ''
+  }
+  
+  console.log('Creating user document:', userDoc)
+  await setDoc(userRef, userDoc)
   
   return userRef
 }
@@ -78,7 +95,28 @@ export const getUser = async (uid: string): Promise<UserDocument | null> => {
 
 export const updateUser = async (uid: string, updates: Partial<UserDocument>) => {
   const userRef = doc(db, 'users', uid)
-  await updateDoc(userRef, updates)
+  
+  // Handle nested field updates properly
+  const updateData: any = {}
+  
+  Object.keys(updates).forEach(key => {
+    if (key === 'metadata' && updates.metadata) {
+      // Handle metadata updates
+      Object.keys(updates.metadata).forEach(metaKey => {
+        updateData[`metadata.${metaKey}`] = updates.metadata![metaKey as keyof typeof updates.metadata]
+      })
+    } else if (key === 'profile' && updates.profile) {
+      // Handle profile updates
+      Object.keys(updates.profile).forEach(profileKey => {
+        updateData[`profile.${profileKey}`] = updates.profile![profileKey as keyof typeof updates.profile]
+      })
+    } else if (key !== 'metadata' && key !== 'profile') {
+      // Handle direct field updates
+      updateData[key] = updates[key as keyof UserDocument]
+    }
+  })
+  
+  await updateDoc(userRef, updateData)
   return userRef
 }
 

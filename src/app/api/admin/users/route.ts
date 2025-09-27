@@ -20,8 +20,11 @@ export async function GET() {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
 
+    console.log('Fetching users from Firestore...')
     const snapshot = await adminDb.collection('users').limit(200).get()
     const users = snapshot.docs.map(d => ({ uid: d.id, ...d.data() }))
+    
+    console.log(`Found ${users.length} users`)
     return NextResponse.json({ users })
   } catch (err) {
     console.error('Error fetching users:', err)
